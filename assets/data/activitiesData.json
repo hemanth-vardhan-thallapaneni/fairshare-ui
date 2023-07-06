@@ -1,0 +1,32 @@
+{
+    "data":[
+        {
+            "userId":3242423424,
+            "group":"Personal",
+            "amount":1241,
+            "name":"Manikanta"
+            
+        },
+        {
+            "userId":3234423424,
+            "group":"Tabner",
+            "amount":421,
+            "name":"Pavan"
+            
+        },
+        {
+            "userId":3242423424,
+            "group":"Personal",
+            "amount":42,
+            "name":"Prabhakar"
+            
+        },
+        {
+            "userId":3242423424,
+            "group":"Personal",
+            "amount":32,
+            "name":"Kiran"
+            
+        }
+    ]
+}
