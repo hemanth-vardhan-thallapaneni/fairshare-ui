@@ -46,17 +46,17 @@ const SignUp = () => {
   };
 
   const onSubmit = async () => {
-    console.log("here");
     try {
       let response = {};
       let user = {};
       if (isExistingUser) {
         response = await signIn(signUpForm.email, signUpForm.password);
-        user = response?.userObj || null;
+        user = (await response?.userObj) || null;
       } else {
         response = await signUp(signUpForm.email, signUpForm.password);
-        user = response.data?.userObj || null;
+        user = (await response.data?.userObj) || null;
       }
+
       if (user) {
         await AsyncStorage.setItem("userData", JSON.stringify(user));
 

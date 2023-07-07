@@ -1,5 +1,5 @@
 const config = {
-  apiUrl: "http://192.168.86.119",
+  apiUrl: "http://172.20.10.6",
   port: 3000,
 };
 

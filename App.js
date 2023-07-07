@@ -1,8 +1,8 @@
-import React from "react";
-import { StyleSheet } from "react-native";
+import React, { useState, useEffect } from "react";
+import { StyleSheet, PermissionsAndroid, View } from "react-native";
 import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import SignUp from "./screens/SignUp";
+import { Camera } from "expo-camera";
 import UserStack from "./navigation/UserStack";
 const Stack = createNativeStackNavigator();
 const MyTheme = {
@@ -14,6 +14,22 @@ const MyTheme = {
 };
 
 export default function App() {
+  const [hasPermission, setHasPermission] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      const { status } = await Camera.requestPermissionsAsync();
+      setHasPermission(status === "granted");
+    })();
+  }, []);
+
+  if (hasPermission === null) {
+    return <View />;
+  }
+
+  if (hasPermission === false) {
+    return <Text>No access to camera</Text>;
+  }
   return (
     <NavigationContainer theme={MyTheme}>
       <UserStack />
