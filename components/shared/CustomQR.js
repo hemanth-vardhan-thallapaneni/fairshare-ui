@@ -1,19 +1,22 @@
-import { View, Text, StyleSheet, useState } from "react-native";
-import React from "react";
+import { View, Text, StyleSheet } from "react-native";
+import React, { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import QRCode from "react-native-qrcode-svg";
 import * as StylingProperties from "../../constants/StylingProperties.js";
 
-const CustomQR = () => {
-  AsyncStorage.getItem("userData").then((value) => {
-    //setqrCodeValue(value || "");
-  });
+const CustomQR = (userId) => {
+  const [user, setUser] = useState("none");
+  useEffect(() => {
+    setUser(userId || "none");
+    console.log(user);
+  }, "none");
+
   return (
     <View style={styles.qrCode}>
       <QRCode
         color={StylingProperties.darkTextColor}
         backgroundColor="transparent"
-        value="sdf"
+        value="{user}"
         size="2000"
       />
     </View>
