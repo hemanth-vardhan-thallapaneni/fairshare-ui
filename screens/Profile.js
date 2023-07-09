@@ -55,11 +55,14 @@ const Profile = () => {
             <Text style={styles.profileName}>{user?.user_name}</Text>
           </View>
         </View>
-        <View style={styles.qrContentContainer}>
-          <Text style={styles.friendCode}>43A35</Text>
-          <CustomQR />
-        </View>
-        {!scanQr && <CustomQRScanner />}
+        {!scanQr && (
+          <View style={styles.qrContentContainer}>
+            <Text style={styles.friendCode}>43A35</Text>
+            <CustomQR userId={user._id} />
+          </View>
+        )}
+
+        {scanQr && <CustomQRScanner />}
       </View>
       <View style={[styles.qrOptionsContainer, styles.card]}>
         <TouchableOpacity
