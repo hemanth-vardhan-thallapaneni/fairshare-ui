@@ -51,26 +51,29 @@ const SignUp = () => {
       let user = {};
       if (isExistingUser) {
         response = await signIn(signUpForm.email, signUpForm.password);
-        user = (await response?.userObj) || null;
+        user = response?.userObj || null;
       } else {
         response = await signUp(signUpForm.email, signUpForm.password);
-        user = (await response.data?.userObj) || null;
+
+        user = response.data?.userObj || null;
       }
 
       if (user) {
         await AsyncStorage.setItem("userData", JSON.stringify(user));
-
         navigation.navigate("TabStack");
-      } else if (
-        response.response.data.error === "Invalid username or password"
-      ) {
+      } else if (response.statusCode === 400) {
         setErrorObj((prevState) => ({
-          message: response.response.data.error,
+          message: "Invalid Username and password",
           show: true,
         }));
-      } else if (response.response.data.error === "User already exists") {
+      } else if (response.statusCode === 409) {
         setErrorObj((prevState) => ({
-          message: response.response.data.error,
+          message: "User Already Exists!",
+          show: true,
+        }));
+      } else {
+        setErrorObj((prevState) => ({
+          message: "Something went wrong! Try again.",
           show: true,
         }));
       }
