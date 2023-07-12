@@ -9,7 +9,7 @@ const CustomQR = (userId) => {
   useEffect(() => {
     setUser(userId || "none");
     console.log(user);
-  }, "none");
+  }, []);
 
   return (
     <View style={styles.qrCode}>

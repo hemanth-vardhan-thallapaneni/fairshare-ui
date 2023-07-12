@@ -6,7 +6,7 @@ import Todo from "../screens/Todo";
 import Profile from "../screens/Profile";
 import { Feather } from "@expo/vector-icons";
 import Header from "../components/shared/Header";
-
+import * as StylingProperties from "../constants/StylingProperties.js";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 const Tab = createBottomTabNavigator();
@@ -16,8 +16,8 @@ const TabStack = () => {
       screenOptions={({ route }) => ({
         tabBarLabelStyle: { display: "none" },
         tabBarStyle: {
-          backgroundColor: "transparent",
-          borderTopColor: "white",
+          backgroundColor: StylingProperties.lightBackgroundColor,
+          borderTopWidth: 0,
         },
 
         tabStyle: {

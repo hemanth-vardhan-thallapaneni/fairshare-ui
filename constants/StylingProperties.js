@@ -4,3 +4,4 @@ export const darkTextColor = "#594545";
 export const borderColor = "#F5EBEB";
 export const borderRadius = 10;
 export const shadowColor = "#604A7B";
+export const lightBackgroundColor = "#FFF8EA";

@@ -15,7 +15,7 @@ const CustomQRScanner = () => {
     return () => {
       setScanned(false);
     };
-  }, "");
+  }, []);
 
   return (
     <View style={styles.container}>
