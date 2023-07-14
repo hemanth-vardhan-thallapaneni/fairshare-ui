@@ -1,13 +1,27 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet, ActivityIndicator } from "react-native";
 import React, { useState, useEffect } from "react";
 import { BarCodeScanner } from "expo-barcode-scanner";
-const CustomQRScanner = () => {
+import friendsService from "../../services/friendsService";
+import * as stylingProperties from "../../constants/StylingProperties.js";
+
+const CustomQRScanner = ({ currentUserId }) => {
   const [scanned, setScanned] = useState(false);
 
   const handleBarCodeScanned = ({ type, data }) => {
+    console.log("data", data);
     if (!scanned) {
-      setScanned(true);
-      alert(`Scanned barcode with type ${type} and data ${data}`);
+      let parsedUserData = JSON.parse(data);
+      if (parsedUserData) {
+        try {
+          console.log(parsedUserData);
+          setScanned(true);
+          const response = friendsService.add({
+            currentUserId: currentUserId,
+            id: parsedUserData._id,
+            name: parsedUserData.user_name,
+          });
+        } catch (error) {}
+      }
     }
   };
 
@@ -19,10 +33,19 @@ const CustomQRScanner = () => {
 
   return (
     <View style={styles.container}>
-      <BarCodeScanner
-        onBarCodeScanned={handleBarCodeScanned}
-        style={StyleSheet.absoluteFillObject}
-      />
+      {!scanned && (
+        <BarCodeScanner
+          onBarCodeScanned={handleBarCodeScanned}
+          style={StyleSheet.absoluteFillObject}
+        />
+      )}
+
+      {scanned && (
+        <ActivityIndicator
+          size="large"
+          color={stylingProperties.darkTextColor}
+        />
+      )}
     </View>
   );
 };

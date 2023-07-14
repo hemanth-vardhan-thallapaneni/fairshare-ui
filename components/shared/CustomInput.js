@@ -10,6 +10,7 @@ const CustomInput = ({
   hideInput,
   onChangeText,
   validator,
+  maxLength,
 }) => {
   const [isError, setIsError] = useState(true);
 
@@ -32,11 +33,12 @@ const CustomInput = ({
   return (
     <View style={styles.inputContainer}>
       <TextInput
+        maxLength={maxLength}
         style={[
           styles.baseStyles,
           { borderColor: !isError ? "#F24C3D" : StylingProperties.borderColor },
         ]}
-        onChangeText={handleChange}
+        onChangeText={onChangeText && handleChange}
         value={value}
         placeholder={label}
         secureTextEntry={hideInput || false}

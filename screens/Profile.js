@@ -13,9 +13,11 @@ import * as StylingProperties from "../constants/StylingProperties.js";
 import { AntDesign } from "@expo/vector-icons";
 import CustomQR from "../components/shared/CustomQR.js";
 import CustomQRScanner from "../components/shared/CustomQRScanner.js";
+import CustomInput from "../components/shared/CustomInput.js";
 const Profile = () => {
   let [user, setUser] = useState({});
   let [scanQr, setScanQr] = useState(false);
+  const [friendCode, setFriendCode] = useState("");
   const [settingsMenu, setSettingsMenu] = useState([
     {
       name: "Profile Settings",
@@ -25,14 +27,21 @@ const Profile = () => {
     },
   ]);
 
+  const navigation = useNavigation();
+
   AsyncStorage.getItem("userData").then((value) => {
     user = JSON.parse(value);
     setUser(user);
   });
-  const navigation = useNavigation();
+
   const logout = () => {
     AsyncStorage.clear();
     navigation.navigate("SignUp");
+  };
+  const handleInputChange = (value) => {
+    setFriendCode(value);
+    if (value.length == 6) {
+    }
   };
   const handleToggle = (openCamera) => {
     setScanQr(openCamera);
@@ -57,17 +66,28 @@ const Profile = () => {
         </View>
         {!scanQr && (
           <View style={styles.qrContentContainer}>
-            <Text style={styles.friendCode}>43A35</Text>
-            <CustomQR userId={user._id} />
+            <Text style={styles.friendCode}>{user?.friendCode}</Text>
+            <CustomQR userData={user} />
           </View>
         )}
 
-        {scanQr && <CustomQRScanner />}
+        {scanQr && (
+          <View style={styles.qrContentContainer}>
+            <CustomInput
+              value={friendCode}
+              label="Enter Code"
+              maxLength={6}
+              onChangeText={(value) => handleInputChange(value)}
+            ></CustomInput>
+
+            <CustomQRScanner currentUserId={user._id} />
+          </View>
+        )}
       </View>
       <View style={[styles.qrOptionsContainer, styles.card]}>
         <TouchableOpacity
-          onPress={() => handleToggle(true)}
-          style={[{ alignItems: "center" }, scanQr && styles.selected]}
+          onPress={() => handleToggle(false)}
+          style={[{ alignItems: "center" }, !scanQr && styles.selected]}
         >
           <AntDesign
             name="qrcode"
@@ -75,12 +95,12 @@ const Profile = () => {
             color={StylingProperties.darkTextColor}
             style={{ marginBottom: 5 }}
           />
-          <Text>Scan QR Code</Text>
+          <Text>My QR Code</Text>
         </TouchableOpacity>
         <View style={styles.verticalDivider}></View>
         <TouchableOpacity
-          onPress={() => handleToggle(false)}
-          style={[{ alignItems: "center" }, !scanQr && styles.selected]}
+          onPress={() => handleToggle(true)}
+          style={[{ alignItems: "center" }, scanQr && styles.selected]}
         >
           <AntDesign
             name="scan1"
@@ -88,7 +108,8 @@ const Profile = () => {
             color={StylingProperties.darkTextColor}
             style={{ marginBottom: 5 }}
           />
-          <Text>My QR Code</Text>
+
+          <Text>Scan QR Code</Text>
         </TouchableOpacity>
       </View>
 
@@ -168,6 +189,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     gap: 20,
+    width: "100%",
   },
   heading: {
     color: StylingProperties.darkTextColor,
@@ -183,6 +205,7 @@ const styles = StyleSheet.create({
     fontSize: 50,
     fontWeight: "bold",
     letterSpacing: 8,
+    textTransform: "uppercase",
   },
 
   profileButton: {
