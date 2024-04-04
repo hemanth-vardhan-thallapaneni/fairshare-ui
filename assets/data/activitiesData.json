@@ -1,5 +1,5 @@
 {
-    "data":[
+    "recent_activites":[
         {
             "userId":3242423424,
             "group":"Personal",
@@ -27,6 +27,43 @@
             "amount":32,
             "name":"Kiran"
             
+        }
+    ],
+    "friends":[
+        {
+            "name":"Kiran"
+        },
+        {
+            "name":"Kiran"
+        },
+        {
+            "name":"Kiran"
+        },
+        {
+            "name":"Kiran"
+        },
+        {
+            "name":"Kiran"
+        },
+        {
+            "name":"Prabhakar"
+        },
+        {
+            "name":"Pavan"
+        },
+        {
+            "name":"Goutham"
+        }
+    ],
+    "categories":[
+        {
+            "name":"Restaurants"
+        },
+        {
+            "name":"Groceries"
+        },
+        {
+            "name":"Other"
         }
     ]
 }

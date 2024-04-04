@@ -1,7 +1,8 @@
 import { Platform } from "react-native";
 
 const config = {
-  apiUrl: Platform.OS == "android" ? "http://localhost" : "http://172.20.10.6",
+  apiUrl:
+    Platform.OS == "android" ? "http://localhost" : "http://10.193.155.11",
   port: 3000,
 };
 

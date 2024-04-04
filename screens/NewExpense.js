@@ -3,16 +3,22 @@ import {
   Text,
   Animated,
   StyleSheet,
+  TextInput,
   SafeAreaView,
   TouchableOpacity,
+  ScrollView,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Feather } from "@expo/vector-icons";
+import * as StylingProperties from "../constants/StylingProperties.js";
+const jsonData = require("../assets/data/activitiesData.json");
 
 const NewExpense = () => {
   const navigation = useNavigation();
   const sizeAnimation = useState(new Animated.Value(0))[0];
+  const categories = jsonData.categories;
+  const friends = jsonData.friends;
   useEffect(() => {
     function startAnimation() {
       Animated.parallel([
@@ -60,8 +66,41 @@ const NewExpense = () => {
         </View>
         <View style={styles.addExpenseContainer}>
           <Text style={styles.title}>New Expense</Text>
-          <View style={styles.expensePic} />
-          <Text style={styles.expenseName}>Yaswanth & +1 </Text>
+          <View style={styles.expenseInputContainer}>
+            <Text style={styles.currency}>$</Text>
+            <TextInput
+              style={[styles.currency]}
+              keyboardType="numeric"
+            ></TextInput>
+          </View>
+          <TextInput
+            style={styles.moneyForText}
+            placeholder="What's this for?"
+            placeholderTextColor={StylingProperties.lightTextColor}
+          ></TextInput>
+          <View style={{ width: "90%" }}>
+            <ScrollView horizontal={true}>
+              <View style={styles.friendsList}>
+                {friends.map((friend) => (
+                  <View style={styles.friendContainer}>
+                    <View style={styles.expensePic} />
+                    <Text style={styles.expenseName}> {friend.name} </Text>
+                  </View>
+                ))}
+              </View>
+            </ScrollView>
+          </View>
+          <View style={{ width: "90%" }}>
+            <ScrollView horizontal={true}>
+              <View style={styles.categroiesList}>
+                {categories.map((category) => (
+                  <View style={styles.categoryContainer}>
+                    <Text style={styles.categoryName}>{category.name} </Text>
+                  </View>
+                ))}
+              </View>
+            </ScrollView>
+          </View>
         </View>
       </View>
     </SafeAreaView>
@@ -90,11 +129,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     gap: 30,
+    width: "100%",
   },
   expensePic: {
     backgroundColor: "#D5B4B4",
-    width: 100,
-    height: 100,
+    width: 50,
+    height: 50,
     borderRadius: 50,
   },
   title: {
@@ -104,6 +144,54 @@ const styles = StyleSheet.create({
   },
   expenseName: {
     color: "#F5EBEB",
+  },
+  expenseInputContainer: {
+    width: "80%",
+    fontSize: 100,
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    // borderBottomWidth: 2,
+    borderColor: StylingProperties.lightTextColor,
+  },
+  moneyForText: {
+    fontSize: 20,
+    color: StylingProperties.lightTextColor,
+  },
+  currency: {
+    fontSize: 100,
+    color: StylingProperties.lightTextColor,
+  },
+  friendsList: {
+    width: "90%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    flexDirection: "row",
+    gap: 20,
+  },
+  friendContainer: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  categroiesList: {
+    width: "90%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    flexDirection: "row",
+    gap: 10,
+  },
+  categoryContainer: {
+    borderRadius: 10,
+    padding: 5,
+    borderWidth: 2,
+    borderColor: StylingProperties.lightBackgroundColor,
+  },
+  categoryName: {
+    color: StylingProperties.lightTextColor,
   },
 });
 

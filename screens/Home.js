@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet } from "react-native";
 import React, { useState } from "react";
 import RecentActivities from "../components/HomeScreen/RecentActivities";
+import * as stylingProperties from "../constants/StylingProperties";
 
 const Home = () => {
   const [totalBalance, setTotalBalance] = useState(145);
@@ -12,9 +13,11 @@ const Home = () => {
   };
   return (
     <View style={styles.homeContainer}>
-      <View style={[styles.balanceContainer, getBackgroundColor()]}>
-        <Text style={styles.baseFontStyle}>Total Balance</Text>
-        <Text style={styles.baseFontStyle}>${totalBalance}</Text>
+      <View style={[styles.balanceContainer]}>
+        <Text style={styles.header}>Total Balance</Text>
+        <Text style={[styles.baseFontStyle, getBackgroundColor()]}>
+          ${totalBalance}
+        </Text>
       </View>
 
       <RecentActivities />
@@ -37,26 +40,26 @@ const styles = StyleSheet.create({
   balanceContainer: {
     width: "95%",
     display: "flex",
-
-    alignItems: "center",
+    alignItems: "flex-start",
     justifyContent: "space-between",
-    flexDirection: "row",
-    borderWidth: 1,
+    flexDirection: "column",
     padding: "5%",
-    borderColor: "thistle",
-    borderRadius: 10,
+  },
+  header: {
+    fontSize: 15,
+    color: stylingProperties.darkTextColor,
+    fontWeight: 600,
   },
   baseFontStyle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "white",
+    fontSize: 70,
+    fontWeight: 800,
   },
   balancePositive: {
-    backgroundColor: "#2B7A0B",
-    borderColor: "#3D8361",
+    // backgroundColor: "#2B7A0B",
+    color: "#2B7A0B",
   },
   balanceNegative: {
-    backgroundColor: "#B31312",
+    color: "#B31312",
   },
 });
 

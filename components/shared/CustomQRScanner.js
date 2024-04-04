@@ -15,7 +15,7 @@ const CustomQRScanner = ({ currentUserId }) => {
         try {
           console.log(parsedUserData);
           setScanned(true);
-          const response = friendsService.add({
+          const response = friendsService.addFriendByQRCode({
             currentUserId: currentUserId,
             id: parsedUserData._id,
             name: parsedUserData.user_name,

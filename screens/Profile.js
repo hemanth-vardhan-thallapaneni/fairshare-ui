@@ -14,6 +14,8 @@ import { AntDesign } from "@expo/vector-icons";
 import CustomQR from "../components/shared/CustomQR.js";
 import CustomQRScanner from "../components/shared/CustomQRScanner.js";
 import CustomInput from "../components/shared/CustomInput.js";
+import friendsService from "../services/friendsService.js";
+
 const Profile = () => {
   let [user, setUser] = useState({});
   let [scanQr, setScanQr] = useState(false);
@@ -38,16 +40,18 @@ const Profile = () => {
     AsyncStorage.clear();
     navigation.navigate("SignUp");
   };
+
   const handleInputChange = (value) => {
     setFriendCode(value);
     if (value.length == 6) {
+      const response = friendsService.addFriendByCode({
+        code: value,
+        user_id: "sfasdfas",
+      });
     }
   };
   const handleToggle = (openCamera) => {
     setScanQr(openCamera);
-    if (openCamera) {
-    } else {
-    }
   };
 
   return (
