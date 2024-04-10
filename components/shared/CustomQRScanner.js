@@ -4,23 +4,26 @@ import { BarCodeScanner } from "expo-barcode-scanner";
 import friendsService from "../../services/friendsService";
 import * as stylingProperties from "../../constants/StylingProperties.js";
 
-const CustomQRScanner = ({ currentUserId }) => {
+const CustomQRScanner = ({ currentUserId, onEvent }) => {
   const [scanned, setScanned] = useState(false);
 
-  const handleBarCodeScanned = ({ type, data }) => {
+  const handleBarCodeScanned = async ({ type, data }) => {
     console.log("data", data);
     if (!scanned) {
       let parsedUserData = JSON.parse(data);
       if (parsedUserData) {
         try {
-          console.log(parsedUserData);
+          console.log("parsedUserData", parsedUserData);
           setScanned(true);
-          const response = friendsService.addFriendByQRCode({
+          const response = await friendsService.addFriendByQRCode({
             currentUserId: currentUserId,
             id: parsedUserData._id,
             name: parsedUserData.user_name,
           });
-        } catch (error) {}
+          if (await response) setScanned(false);
+        } catch (error) {
+          onEvent(error.response.data.message);
+        }
       }
     }
   };

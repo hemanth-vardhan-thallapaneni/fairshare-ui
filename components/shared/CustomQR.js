@@ -7,7 +7,8 @@ const CustomQR = ({ userData }) => {
   const [user, setUser] = useState("none");
   useEffect(() => {
     setUser(JSON.stringify(userData) || "none");
-  }, []);
+  }, [userData]);
+
   return (
     <View style={styles.qrCode}>
       <QRCode

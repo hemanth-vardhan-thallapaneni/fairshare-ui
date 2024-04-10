@@ -50,10 +50,16 @@ const SignUp = () => {
       let response = {};
       let user = {};
       if (isExistingUser) {
-        response = await signIn(signUpForm.email, signUpForm.password);
+        response = await signIn(
+          signUpForm.email.toLowerCase(),
+          signUpForm.password
+        );
         user = response?.userObj || null;
       } else {
-        response = await signUp(signUpForm.email, signUpForm.password);
+        response = await signUp(
+          signUpForm.email.toLowerCase(),
+          signUpForm.password
+        );
 
         user = response.data?.userObj || null;
       }

@@ -15,6 +15,7 @@ import CustomQR from "../components/shared/CustomQR.js";
 import CustomQRScanner from "../components/shared/CustomQRScanner.js";
 import CustomInput from "../components/shared/CustomInput.js";
 import friendsService from "../services/friendsService.js";
+import CustomModal from "../components/shared/CustomModal.js";
 
 const Profile = () => {
   let [user, setUser] = useState({});
@@ -28,7 +29,10 @@ const Profile = () => {
       name: "Notifications",
     },
   ]);
-
+  const [errObj, setErrorObj] = useState({
+    message: "",
+    show: false,
+  });
   const navigation = useNavigation();
 
   AsyncStorage.getItem("userData").then((value) => {
@@ -52,6 +56,12 @@ const Profile = () => {
   };
   const handleToggle = (openCamera) => {
     setScanQr(openCamera);
+  };
+  const handleScanComplete = (message) => {
+    setErrorObj((prevState) => ({
+      message: message,
+      show: true,
+    }));
   };
 
   return (
@@ -84,7 +94,10 @@ const Profile = () => {
               onChangeText={(value) => handleInputChange(value)}
             ></CustomInput>
 
-            <CustomQRScanner currentUserId={user._id} />
+            <CustomQRScanner
+              onEvent={handleScanComplete}
+              currentUserId={user._id}
+            />
           </View>
         )}
       </View>
@@ -120,6 +133,15 @@ const Profile = () => {
       <TouchableOpacity onPress={logout}>
         <Text style={styles.logoutButton}>Logout</Text>
       </TouchableOpacity>
+
+      {errObj.show && (
+        <CustomModal
+          message={errObj.message}
+          hideModal={() => {
+            setErrorObj({ message: "", show: false });
+          }}
+        ></CustomModal>
+      )}
     </SafeAreaView>
   );
 };

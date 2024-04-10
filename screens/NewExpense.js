@@ -12,6 +12,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Feather } from "@expo/vector-icons";
 import * as StylingProperties from "../constants/StylingProperties.js";
+import CustomButton from "../components/shared/CustomButton.js";
 const jsonData = require("../assets/data/activitiesData.json");
 
 const NewExpense = () => {
@@ -81,8 +82,8 @@ const NewExpense = () => {
           <View style={{ width: "90%" }}>
             <ScrollView horizontal={true}>
               <View style={styles.friendsList}>
-                {friends.map((friend) => (
-                  <View style={styles.friendContainer}>
+                {friends.map((friend, index) => (
+                  <View key={index} style={styles.friendContainer}>
                     <View style={styles.expensePic} />
                     <Text style={styles.expenseName}> {friend.name} </Text>
                   </View>
@@ -93,14 +94,22 @@ const NewExpense = () => {
           <View style={{ width: "90%" }}>
             <ScrollView horizontal={true}>
               <View style={styles.categroiesList}>
-                {categories.map((category) => (
-                  <View style={styles.categoryContainer}>
+                {categories.map((category, index) => (
+                  <View key={index} style={styles.categoryContainer}>
                     <Text style={styles.categoryName}>{category.name} </Text>
                   </View>
                 ))}
               </View>
             </ScrollView>
           </View>
+        </View>
+        <View style={{ marginTop: "65%", width: "100%" }}>
+          <CustomButton
+            //onClick={() => onSubmit()}
+            title={"Add Expense"}
+            type="flat"
+            width="90%"
+          ></CustomButton>
         </View>
       </View>
     </SafeAreaView>
@@ -111,8 +120,9 @@ const styles = StyleSheet.create({
   expenseContainer: {
     display: "flex",
     alignItems: "center",
-    justifyContent: "space-around",
+    justifyContent: "flex-start",
     width: "100%",
+    height: "100%",
     padding: 10,
   },
   headerContainer: {

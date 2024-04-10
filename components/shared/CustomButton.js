@@ -31,13 +31,14 @@ const CustomButton = ({ title, width, type, onClick }) => {
 
 const styles = StyleSheet.create({
   commonButton: {
+    padding: 10,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     borderRadius: StylingProperties.borderRadius,
     height: 50,
     borderWidth: 2,
-    borderColor: StylingProperties.borderColor,
+    borderColor: StylingProperties.primaryColor,
   },
   buttonTitle: {
     fontSize: 16,
